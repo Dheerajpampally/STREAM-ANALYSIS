@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="suppoer-area pb-50 pt-50">
+    <div class="container">
+        <h2 class="text-center mb-50">
+            Select Agent</h2>
+        
+        <form>
+            <div class="d-flex mb-50">
+                <label class="col-2">Select course</label>
+                <select name="course" class="col-8">
+                    <option value="">-----</option>
+                    {% for course in courses %}
+                        <option value="{{ course.id }}">{{ course }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="search" class="col-2">
+            </div>
+        </form>
+
+        <div class="table-content table-responsive cart-table-content">
+            <table>
+                <tbody>
+                    {% for item in agencies %}
+                    <tr>
+                        <td class="product-name">{{ item.name }}</td>
+                        <td class="product-name">Phone: {{ item.phone }}</td>
+                        <td class="product-name">Email: {{ item.user.email }}</td>
+
+                        <td class="product-name">
+                            <a class="bg-dark text-light mr-10" style="padding: 10px;" href="{% url 'counsellor_agent:select_agent_complete' score item.user.id %}">Select</a>
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

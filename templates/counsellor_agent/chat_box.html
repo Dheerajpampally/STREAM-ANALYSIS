@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+<div class="login-register-area pt-10 pb-10">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 col-md-12 ml-auto mr-auto">
+                <div class="login-register-wrapper">
+                    <div class="tab-content">
+                        <div id="lg1" >
+                            <div class="login-form-container">
+                                <div class="login-register-form ">
+                                    <div class="">
+                                        <h3>{{ user_data.username }}</h3>
+                                        {{ user_data.get_role }}
+                                        <hr>
+                                    </div>
+                                    <div style="max-height: 400px; overflow-y: scroll;" class="chats d-flex flex-column">
+                                    {% for chat in chats %}
+                                        {% if chat.sender == request.user %}
+                                        <div class="col-11 col-md-7 bg-gray mb-20 align-self-end mr-10" style="padding:10px; border: 1px solid rgb(194, 194, 194); border-radius:10px" >
+                                            <p class="mb-0">{{ chat.message }}</p>
+                                            <span style="color:gray; font-size:12px" class="">{{ chat.created_at | naturaltime }}</span>
+                                        </div>
+                                        {% else %}
+                                        <div class="col-11 col-md-7 mb-20 ml-10" style="padding:10px; border: 1px solid rgb(194, 194, 194); border-radius:10px" >
+                                            <p class="mb-0">{{ chat.message }}</p>
+                                            <span style="color:gray; font-size:12px">{{ chat.created_at | naturaltime }}</span>
+                                        </div>
+                                        {% endif %}
+                                    {% empty %}
+                                    <p>No Chat History</p>
+                                    {% endfor %}
+                                    </div>
+
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <div class="d-flex mt-50">
+                                            <input class="col-10" type="text" name="message" id="">
+                                            <input class="bg-dark text-light" type="submit" value="Send">
+                                        </div>
+                                    </form>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .chats::-webkit-scrollbar{
+        width: 5px;
+    }
+    .chats::-webkit-scrollbar-track {
+        background-color: #fafafa;
+        /* You can add other properties & values */
+    }
+    .chats::-webkit-scrollbar-thumb {
+        background: rgb(158, 158, 158); 
+    }
+    </style>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+<div class="suppoer-area pb-50 pt-50">
+    <div class="container">
+        <h2 class="text-center mb-50">
+            Notifications</h2>
+        <div class="table-content table-responsive cart-table-content">
+            <table>
+                <tbody>
+                    {% for item in notifications %}
+                    
+                    <tr class="{% if item.read %} bg-gray {% endif %}">
+                        <td>
+                            <span class="bg-gray text-muted" style="position: absolute; margin-top:-60px; margin-left: 15px;padding:5px">
+                                {{ item.notified_at | naturaltime }}
+                            </span>
+                        </td>
+                        <td style='width: 250px;'>{{ item.score.student }}</td>
+                        <td style='width: 150px;'>Score: {{ item.score.score }}/ {{ item.score.out_of }}</td>
+                        <td class="product-name">Top Stream: {{ item.score.top_stream }}</td>
+                        <td class="product-name">Counsellor:<a href="{% url 'counsellor_agent:chat_box' item.counsellor.id %}">{{ item.counsellor }}</a></td>
+
+                        <td style='width: 500px; font-size: 12px;'>
+                            <a class="bg-dark text-light mr-10" style="padding: 10px;" href="{% url 'counsellor_agent:chat_box' item.score.student.id %}">Chat Now</a>
+                            <a class="bg-dark text-light mr-10" style="padding: 10px;" href="{% url 'counsellor_agent:select_college' item.score.id %}">Select College</a>
+                            
+                            {% if not item.read %}
+                            <a class="bg-gray" style="padding: 10px;" href="{% url 'counsellor_agent:agency_mark_as_read' item.id %}">Mark A Read</a>
+                            {% endif %}"
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

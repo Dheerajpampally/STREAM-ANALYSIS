@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="login-register-area pt-100 pb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 col-md-12 ml-auto mr-auto">
+                <div class="login-register-wrapper">
+                    <div class="login-register-tab-list nav">
+                            <a class="active">
+                                <h4> Choose Stream</h4>
+                            </a>
+                    </div>
+                    <div class="tab-content">
+                        <div id="lg1" >
+                            <div class="login-form-container">
+                                <div class="login-register-form">
+                                    <form action="" method="post">
+                                        {% csrf_token %}
+                                        
+                                        <p class="pb-25">
+                                            <label for="course_dropdown">Course</label>
+                                            <select class="bg-gray" name="course" id="course_dropdown">
+                                                {% for course in courses %}
+                                                    <option value="{{ course.id }}"> {{ course }} </option>
+                                                {% endfor %}
+                                            </select>
+                                        </p>
+
+                                        <p class="pb-25">
+                                            <label for="stream_dropdown">Stream</label>
+                                            <select class="bg-gray" name="stream" id="stream_dropdown">
+                                                <option value="">------</option>
+                                                {% for stream in streams %}
+                                                    <option value="{{ stream.id }}"> {{ stream }} </option>
+                                                {% endfor %}
+                                            </select>
+                                        </p>
+
+                                        <div class="button-box">
+                                            <button type="submit"><span>Start Test</span></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+
+    $(document).ready(function(){
+        $('#course_dropdown').change(function(){
+            var selected = $(this).val()
+            var url = `/exam/ajax/get/stream/${selected}/`
+            $.get(url, function(res){
+                var options = '<option value="">------</option>'
+                var streams = res
+                streams.forEach((stream)=>{
+                    options += `<option value="${stream.id}">${stream.name}</option>`
+                })
+                $('#stream_dropdown').html(options)
+            })
+        })
+
+        // $('#stream_dropdown').change(function(){
+        //     var selected = $(this).val()
+        //     if(selected == null){
+        //         $('#substream_dropdown').empty()
+        //         return 
+        //     }
+        //     else if(selected == ''){
+        //         $('#substream_dropdown').val('')
+        //     }
+        //     var url = `/exam/ajax/get/substream/${selected}/`
+        //     $.get(url, function(res){
+        //         var options = '<option value="">------</option>'
+        //         var substreams = res
+        //         substreams.forEach((substream)=>{
+        //             options += `<option value="${substream.id}">${substream.name}</option>`
+        //         })
+        //         $('#substream_dropdown').html(options)
+        //     })
+        // })
+
+        // $('#substream_dropdown').change(function(){
+        //     if ($('#stream_dropdown').val() == ''){
+        //         $(this).val('')
+        //     }
+        // })
+    })
+
+</script>
+
+{% endblock %}

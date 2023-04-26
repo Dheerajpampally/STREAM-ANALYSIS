@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+    <style>
+        input[type=checkbox]{
+            width: auto ;
+            height: auto !important;
+            margin-bottom: 0px !important;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="breadcrumb-area pt-35 pb-35 bg-gray-3">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <ul>
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+                <li class="active">My Account </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="checkout-area pb-80 pt-100">
+    <div class="container">
+        <div class="row">
+            <div class="ml-auto mr-auto col-lg-9">
+                <div class="checkout-wrapper">
+                    <div id="faq" class="panel-group">
+                        <div class="panel panel-default single-my-account">
+                            <div class="panel-heading my-account-title">
+                                <h3 class="panel-title"><span>1 .</span> <a data-toggle="collapse" data-parent="#faq" href="#my-account-1">Edit your account information </a></h3>
+                            </div>
+                            <div id="my-account-1" class="panel-collapse collapse show">
+                                <div class="panel-body">
+                                    <div class="myaccount-info-wrapper">
+                                        <div class="account-info-wrapper">
+                                            <h4>My Account Information</h4>
+                                            <h5>Your Personal Details</h5>
+                                        </div>
+                                        <form method="post">
+                                            <div>
+                                                {% csrf_token %}
+                                                {{ form.as_p }}
+                                            </div>
+                                            <div class="billing-back-btn">
+                                                <div class="billing-back">
+                                                    
+                                                </div>
+                                                <div class="billing-btn">
+                                                    <button type="submit">Continue</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default single-my-account">
+                            <div class="panel-heading my-account-title">
+                                <h3 class="panel-title"><span>2 .</span> <a data-toggle="collapse" data-parent="#faq" href="#my-account-2">Change your password </a></h3>
+                            </div>
+                            <div id="my-account-2" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="myaccount-info-wrapper">
+                                        <div class="account-info-wrapper">
+                                            <h4>Change Password</h4>
+                                            <h5>Your Password</h5>
+                                        </div>
+                                        <form action="{% url 'accounts:change_password' %}" method="post">
+                                            <div>
+                                                {% csrf_token %}
+                                                {{ password_form.as_p }}
+                                            </div>
+                                            <div class="billing-back-btn">
+                                                <div class="billing-back">
+                                                </div>
+                                                <div class="billing-btn">
+                                                    <button type="submit">Continue</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+{% endblock %}

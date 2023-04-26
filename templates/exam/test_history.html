@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="suppoer-area pb-50 pt-50">
+    <div class="container">
+        <h2 class="text-center mb-50">
+            Previous Exam Results</h2>
+        <div class="table-content table-responsive cart-table-content">
+            <table>
+                <tbody>
+                    {% for item in history %}
+                    
+                    <tr>
+                        <td class="product-name"'>Date: {{ item.exam_date }}
+
+                        </td>
+                        <td class="product-name">Score: {{ item.score }}/ {{ item.out_of }}</td>
+                        <td class="product-name">Top Stream: {{ item.top_stream }}</td>
+                    </tr>
+
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
